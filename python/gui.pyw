@@ -1,11 +1,14 @@
-import tkinter as tk
-from tkinter import ttk
-from record import *
-from dotenv import load_dotenv
-import os
-from pathlib import Path
-import threading
-
+try:
+    import tkinter as tk
+    from tkinter import ttk
+    from record import *
+    from dotenv import load_dotenv
+    import os
+    from pathlib import Path
+    import threading
+except Exception as e:
+    print(e)
+    exit()
 class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
