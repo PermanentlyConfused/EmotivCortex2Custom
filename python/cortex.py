@@ -150,6 +150,8 @@ class Cortex(Dispatcher):
             else:
                 # request access
                 self.request_access()
+        elif req_id == CONNECT_HEADSET_ID:
+            print(recv_dic['result']['message'])
         elif req_id == REQUEST_ACCESS_ID:
             access_granted = result_dic['accessGranted']
 
