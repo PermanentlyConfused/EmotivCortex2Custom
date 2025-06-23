@@ -1,0 +1,3 @@
+websocket-client
+python-dispatch
+python-dotenv
