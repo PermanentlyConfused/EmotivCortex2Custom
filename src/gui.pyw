@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from record import *
 from dotenv import load_dotenv
 import os
@@ -11,7 +10,7 @@ class GUI(tk.Tk):
         super().__init__()
         load_dotenv()
         self.r = Record(os.getenv('EMOTIVID'), os.getenv('EMOTIVSECRET'))
-        current_directory = Path.cwd().as_posix() + "/output"
+        current_directory =  Path.joinpath(Path.cwd(), Path("output")).as_posix()
 
         self.r.record_title = '' # required param and can not be empty
         self.r.record_description = 'CLARKSON_UNIVERSITY_REU_PROGRAM_2025' # optional param
@@ -32,32 +31,32 @@ class GUI(tk.Tk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        self.container = ttk.Frame(self)
+        self.container = tk.Frame(self)
         self.container.grid(row=0, column=0)
 
-        ttk.Label(self.container, text="Participant ID/Name").grid(row=0, column=0, padx=10, pady=5)
-        ttk.Label(self.container, text="Start").grid(row=0, column=1, padx=10, pady=5)
-        ttk.Label(self.container, text="Stop").grid(row=0, column=2, padx=10, pady=5)
+        tk.Label(self.container, text="Participant ID/Name").grid(row=0, column=0, padx=10, pady=5)
+        tk.Label(self.container, text="Start").grid(row=0, column=1, padx=10, pady=5)
+        tk.Label(self.container, text="Stop").grid(row=0, column=2, padx=10, pady=5)
 
-        self.rows_frame = ttk.Frame(self.container)
+        self.rows_frame = tk.Frame(self.container)
         self.rows_frame.grid(row=1, column=0, columnspan=3)
 
-        self.add_btn = ttk.Button(self.container, text="Add Participant", command=self.add_row)
+        self.add_btn = tk.Button(self.container, text="Add Participant", command=self.add_row)
         self.add_btn.grid(row=2, column=0, columnspan=3, pady=10)
 
         self.add_row()
 
     def add_row(self):
         row = self.row_count
-        entry = ttk.Entry(self.rows_frame)
+        entry = tk.Entry(self.rows_frame)
         entry.grid(row=row, column=0, padx=10, pady=3)
         self.entry_widgets[row] = entry
 
-        start_btn = ttk.Button(self.rows_frame, text="Start", command=lambda r=row: self.start_recording(r))
+        start_btn = tk.Button(self.rows_frame, text="Start", command=lambda r=row: self.start_recording(r))
         start_btn.grid(row=row, column=1, padx=10, pady=3)
         self.start_buttons[row] = start_btn
 
-        stop_btn = ttk.Button(self.rows_frame, text="Stop", state="disabled", command=lambda r=row: self.stop_recording(r))
+        stop_btn = tk.Button(self.rows_frame, text="Stop", state="disabled", command=lambda r=row: self.stop_recording(r))
         stop_btn.grid(row=row, column=2, padx=10, pady=3)
         self.stop_buttons[row] = stop_btn
 

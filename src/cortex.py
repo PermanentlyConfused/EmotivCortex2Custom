@@ -98,7 +98,7 @@ class Cortex(Dispatcher):
 
     def open(self):
         url = "wss://localhost:6868"
-        # websocket.enableTrace(True)
+        #websocket.enableTrace(True)
         self.ws = websocket.WebSocketApp(url, 
                                         on_message=self.on_message,
                                         on_open = self.on_open,
@@ -108,6 +108,7 @@ class Cortex(Dispatcher):
         
         # As default, a Emotiv self-signed certificate is required.
         # If you don't want to use the certificate, please replace by the below line  by sslopt={"cert_reqs": ssl.CERT_NONE}
+        # sslopt = {'ca_certs': "../certificates/rootCA.pem", "cert_reqs": ssl.CERT_REQUIRED}
         sslopt = {'ca_certs': "../certificates/rootCA.pem", "cert_reqs": ssl.CERT_REQUIRED}
 
         self.websock_thread  = threading.Thread(target=self.ws.run_forever, args=(None, sslopt), name=threadName)
@@ -116,6 +117,7 @@ class Cortex(Dispatcher):
 
     def close(self):
         self.ws.close()
+        self.close_session()
 
     def set_wanted_headset(self, headsetId):
         self.headset_id = headsetId
@@ -165,6 +167,7 @@ class Cortex(Dispatcher):
         elif req_id == AUTHORIZE_ID:
             print("Authorize successfully.")
             self.auth = result_dic['cortexToken']
+
             #After successful authorization, the app will call the API refresh headset list for the first time
             self.refresh_headset_list()
             # query headsets
@@ -485,9 +488,9 @@ class Cortex(Dispatcher):
         self.ws.send(json.dumps(authorize_request))
 
     def create_session(self):
-        if self.session_id != '':
-            warnings.warn("There is existed session " + self.session_id)
-            return
+        #if self.session_id != '':
+        #    warnings.warn("There is existed session " + self.session_id)
+        #    return
 
         print('create session --------------------------------')
         create_session_request = { 

@@ -97,10 +97,11 @@ class Record():
         end_time = data['endDatetime']
         title = data['title']
         print('The record has been stopped: recordId: {0}, title: {1}, startTime: {2}, endTime: {3}'.format(record_id, title, start_time, end_time))
-        self.c.disconnect_headset()
-        time.sleep(2)
-        self.export_record(self.record_export_folder, self.record_export_data_types,
-                           self.record_export_format, [record_id], self.record_export_version)
+        #time.sleep(2)
+        #self.c.disconnect_headset()
+        #time.sleep(2)
+        #self.export_record(self.record_export_folder, self.record_export_data_types,
+                           #self.record_export_format, [record_id], self.record_export_version)
 
     def on_warn_record_post_processing_done(self, *args, **kwargs):
         record_id = kwargs.get('data')

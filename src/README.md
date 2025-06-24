@@ -6,8 +6,11 @@
 
 ## Launch Steps:
 
-0.5: On first connect, download
+1. Download [Emotiv Launcher](https://www.emotiv.com/pages/developer) 
+2. Change directory to ./Emotiv_Cortex_GUI/src
+3. run ```python gui.pyw```
+4. On first launch, after inputting participant name/ID and hitting start will prompt user to register the device on the Emotiv Launcher app
 
 ## Notes
-
-Currently not fully tested
+- Currently built for macOS
+- Currently not fully tested
