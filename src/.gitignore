@@ -1,6 +1,0 @@
-data
-*.csv
-*.json
-.env
-__pycache__
-.vscode

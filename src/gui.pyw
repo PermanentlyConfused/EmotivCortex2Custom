@@ -64,42 +64,45 @@ class GUI(tk.Tk):
         self.row_count += 1
 
     def start_recording(self, row):
-        entry_value = self.entry_widgets[row].get()
-        if (not entry_value):
-            print("Empty Participant ID/Name")
-            return
-        if not entry_value.isalnum():
-            print("Cannot use non-alphanumerical values")
-            return
+        try:
+            entry_value = self.entry_widgets[row].get()
+            if (not entry_value):
+                print("Empty Participant ID/Name")
+                return
+            if not entry_value.isalnum():
+                print("Cannot use non-alphanumerical values")
+                return
 
-        print(f"Start recording for row {row}, Participant: {entry_value}")
+            print(f"Start recording for row {row}, Participant: {entry_value}")
 
-        for r in self.start_buttons:
-            self.start_buttons[r]['state'] = 'disabled'
-            self.stop_buttons[r]['state'] = 'disabled'
-            self.entry_widgets[r]['state'] = 'disabled'
+            for r in self.start_buttons:
+                self.start_buttons[r]['state'] = 'disabled'
+                self.stop_buttons[r]['state'] = 'disabled'
+                self.entry_widgets[r]['state'] = 'disabled'
 
-        self.add_btn['state'] = 'disabled'
-        self.stop_buttons[row]['state'] = 'normal'
-        self.start = time.time()
-        self.r.record_title = entry_value
-
-        threading.Thread(target=self.r.start, daemon=True).start()
-
+            self.add_btn['state'] = 'disabled'
+            self.stop_buttons[row]['state'] = 'normal'
+            self.start = time.time()
+            self.r.record_title = entry_value
+            threading.Thread(target=self.r.start, daemon=True).start()
+        except Exception as e:
+            print(e)
+            
     def stop_recording(self, row):
-        entry_value = self.entry_widgets[row].get()
-        if not entry_value:
-            print("Empty Participant ID/Name")
-            return
-        print('end recording -------------------------')
-        print(f"Total Time:{round(time.time()-self.start)}s")
-        print(f"Stop recording for row {row}, Participant: {entry_value}")
-        self.r.stop_record()
-        self.add_btn['state'] = 'normal'
-        for r in self.start_buttons:
-            self.start_buttons[r]['state'] = 'normal'
-            self.stop_buttons[r]['state'] = 'disabled'
-            self.entry_widgets[r]['state'] = 'normal'
+        try:
+            entry_value = self.entry_widgets[row].get()
+            print('end recording -------------------------')
+            print(f"Total Time:{round(time.time()-self.start)}s")
+            print(f"Stop recording for row {row}, Participant: {entry_value}")
+            self.r.stop_record()
+        except Exception as e:
+            print(e)
+        finally:
+            self.add_btn['state'] = 'normal'
+            for r in self.start_buttons:
+                self.start_buttons[r]['state'] = 'normal'
+                self.stop_buttons[r]['state'] = 'disabled'
+                self.entry_widgets[r]['state'] = 'normal'
 
 
 if __name__ == "__main__":
