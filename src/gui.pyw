@@ -23,7 +23,7 @@ class GUI(tk.Tk):
 
         self.title("EEG Data Collection")
         self.geometry("600x400")
-        self.row_count = 1
+        self.row_count = 0 #! The index for adding new rows start at 0
         self.entry_widgets = {}
         self.start_buttons = {}
         self.stop_buttons = {}
@@ -46,7 +46,6 @@ class GUI(tk.Tk):
 
         self.add_row()
 
-
     def add_row(self):
         row = self.row_count
         entry = ttk.Entry(self.rows_frame)
@@ -63,7 +62,13 @@ class GUI(tk.Tk):
 
         self.row_count += 1
 
-    def start_recording(self, row):
+    def start_recording(self, row:int) -> None:
+        """Takes the row's entry field's value then starts a recording session using that entry value as the recording title.
+            Disables all buttons in the window besides from the same row's stop button
+
+        Args:
+            row (int):  The row index of the button that called function.
+        """
         try:
             entry_value = self.entry_widgets[row].get()
             if (not entry_value):
@@ -88,7 +93,14 @@ class GUI(tk.Tk):
         except Exception as e:
             print(e)
             
-    def stop_recording(self, row):
+    def stop_recording(self, row:int) -> None:
+        """Stops the recording and returns all the buttons in the windows back to normal(besides from stop buttons)
+            #! currently, rows do not matter as theres is only 1 record object 
+            
+
+        Args:
+            row (int):  The row index of the button that called function.
+        """
         try:
             entry_value = self.entry_widgets[row].get()
             print('end recording -------------------------')
@@ -104,8 +116,6 @@ class GUI(tk.Tk):
                 self.stop_buttons[r]['state'] = 'disabled'
                 self.entry_widgets[r]['state'] = 'normal'
 
-
 if __name__ == "__main__":
-    
     app = GUI()
     app.mainloop()
