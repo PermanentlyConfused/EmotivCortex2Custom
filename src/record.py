@@ -54,6 +54,23 @@ class Record():
     def stop_record(self):
         self.c.stop_record()
 
+    def add_marker(self,marker_label):
+        #! TODO: Test out marker_value vs marker_label on recorded data
+        marker_time = time.time()*1000
+        print('add marker at : ', marker_time)
+        self.inject_marker(marker_time, 2, marker_label, port='python_app') #self.marker_value
+
+    def inject_marker(self, time, value, label, **kwargs):
+        """
+        To create an "instance" marker to the current record of a session
+        Parameters
+        ----------
+        Please reference to https://emotiv.gitbook.io/cortex-api/markers/injectmarker
+        Returns
+        -------
+        None
+        """
+        self.c.inject_marker_request(time, value, label, **kwargs)
 
     def export_record(self, folder, stream_types, format, record_ids,
                       version, **kwargs):
